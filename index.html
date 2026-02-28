@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTLock R&D Dashboard</title>
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="login-screen" class="overlay">
+            <div class="login-card">
+                <h2>TTLock R&D Login</h2>
+                <p>Enter platform and account credentials</p>
+                <input type="text" id="clientId" placeholder="Client ID">
+                <input type="password" id="clientSecret" placeholder="Client Secret">
+                <hr>
+                <input type="text" id="username" placeholder="TTLock Username">
+                <input type="password" id="password" placeholder="TTLock Password">
+                <button id="btn-connect">Initialize Session</button>
+            </div>
+        </div>
+
+        <div id="dashboard" style="display: none;">
+            <nav class="top-nav">
+                <div class="nav-left">
+                    <strong>TTLock R&D Console</strong>
+                    <span id="connection-status">● System Active</span>
+                </div>
+                <div class="nav-links">
+                    <button id="btn-logout" class="nav-item">Logout</button>
+                </div>
+            </nav>
+
+            <main class="container">
+                <header class="dashboard-header">
+                    <h2>Test Environment Overview</h2>
+                    <p>Active Client ID: <span id="display-client-id"></span></p>
+                </header>
+                
+                <section class="card-grid-top">
+                    <div class="card">
+                        <div class="icon">🔌</div>
+                        <h3>Lock Management</h3>
+                        <p>Fetch and view all locks paired with this account.</p>
+                        <button id="btn-fetch-locks" class="action-btn">Fetch Device List</button>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🔓</div>
+                        <h3>Remote Operations</h3>
+                        <p>Select a lock from the list below to enable controls.</p>
+                        <div id="lock-actions" style="margin-top: 15px; display: none;">
+                            <button id="btn-remote-unlock" class="action-btn secondary">Remote Unlock</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="device-list-container">
+                    <h3>Connected Devices</h3>
+                    <div class="table-wrapper">
+                        <table id="device-table" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>Lock Name</th>
+                                    <th>Lock ID</th>
+                                    <th>Battery</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="device-list-body"></tbody>
+                        </table>
+                        <p id="no-devices">No devices loaded yet. Click "Fetch Device List".</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

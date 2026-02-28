@@ -1,0 +1,105 @@
+/* src/style.css */
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+}
+
+body { margin: 0; padding: 0; }
+
+/* Overlay for Login */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.login-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Dashboard Layout */
+#dashboard {
+  display: block; /* We control visibility via JS */
+  min-height: 100vh;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Cards from image_55fbfd.png */
+.card-grid-top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  transition: transform 0.2s;
+}
+
+.action-btn {
+  background: #222;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Table styling for Device List */
+.table-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 1rem;
+  border: 1px solid #eaeaea;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 20px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
