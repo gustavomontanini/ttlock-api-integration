@@ -1,91 +1,121 @@
 import md5 from 'blueimp-md5';
+import { apiClient } from './api/apiClient.js';
+import { session } from './utils/session.js';
+import { renderDeviceTable } from './components/DeviceTable.js';
 
-// --- Selectors ---
-const loginScreen = document.getElementById('login-screen');
-const dashboard = document.getElementById('dashboard');
-const btnConnect = document.getElementById('btn-connect');
-const btnFetchLocks = document.getElementById('btn-fetch-locks');
-const deviceTable = document.getElementById('device-table');
-const deviceListBody = document.getElementById('device-list-body');
-const noDevicesText = document.getElementById('no-devices');
-const displayClientId = document.getElementById('display-client-id');
+// 1. Elementos do DOM Cacheados
+const ui = {
+    screens: {
+        login: document.getElementById('login-screen'),
+        dashboard: document.getElementById('dashboard'),
+    },
+    buttons: {
+        connect: document.getElementById('btn-connect'),
+        logout: document.getElementById('btn-logout'),
+        fetchLocks: document.getElementById('btn-fetch-locks'),
+    },
+    table: {
+        container: document.getElementById('device-table'),
+        bodyId: 'device-list-body',
+        emptyText: document.getElementById('no-devices')
+    },
+    texts: {
+        displayClientId: document.getElementById('display-client-id')
+    }
+};
 
-// --- Initialization ---
-if (sessionStorage.getItem('tt_token')) {
-    showDashboard();
+// 2. Inicialização
+function init() {
+    if (session.isAuthenticated()) {
+        showDashboard();
+    } else {
+        showLogin();
+    }
+    setupEventListeners();
 }
 
-// --- Login Logic ---
-btnConnect.addEventListener('click', async () => {
+// 3. Controladores de View
+function showDashboard() {
+    ui.screens.login.style.display = 'none';
+    ui.screens.dashboard.style.display = 'block';
+    ui.texts.displayClientId.innerText = session.getClientId();
+}
+
+function showLogin() {
+    ui.screens.login.style.display = 'flex';
+    ui.screens.dashboard.style.display = 'none';
+}
+
+// 4. Eventos
+function setupEventListeners() {
+    ui.buttons.connect.addEventListener('click', handleLogin);
+    ui.buttons.logout.addEventListener('click', () => {
+        session.clear();
+        location.reload();
+    });
+    ui.buttons.fetchLocks.addEventListener('click', handleFetchLocks);
+}
+
+// 5. Lógica de Negócios (Handlers)
+async function handleLogin() {
+    const clientId = document.getElementById('clientId').value;
+    const clientSecret = document.getElementById('clientSecret').value;
+    const username = document.getElementById('username').value;
     const rawPassword = document.getElementById('password').value;
+
+    if (!clientId || !clientSecret || !username || !rawPassword) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+    }
+
+    // Mudança do texto do botão para dar feedback visual
+    ui.buttons.connect.innerText = "Conectando...";
+
     const credentials = {
-        clientId: document.getElementById('clientId').value,
-        clientSecret: document.getElementById('clientSecret').value,
-        username: document.getElementById('username').value,
-        password: md5(rawPassword) // Encrypting as required by TTLock
+        clientId,
+        clientSecret,
+        username,
+        password: md5(rawPassword)
     };
 
     try {
-        const response = await fetch('http://localhost:3001/api/auth/token', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials)
-        });
-        const data = await response.json();
+        const data = await apiClient.login(credentials);
 
         if (data.access_token) {
-            sessionStorage.setItem('tt_token', data.access_token);
-            sessionStorage.setItem('tt_cid', credentials.clientId);
+            session.save(data.access_token, credentials.clientId);
             showDashboard();
         } else {
-            alert("Login Failed: " + (data.description || "Check credentials"));
+            alert("Falha no login: " + (data.description || "Verifique suas credenciais."));
         }
     } catch (err) {
-        alert("Proxy Server not reachable on port 3001.");
+        alert("Erro de conexão. O servidor Proxy (Porta 3001) está rodando?");
+    } finally {
+        ui.buttons.connect.innerText = "Initialize Session";
     }
-});
-
-// --- Fetch Devices Logic ---
-btnFetchLocks.addEventListener('click', async () => {
-    const token = sessionStorage.getItem('tt_token');
-    const clientId = sessionStorage.getItem('tt_cid');
-
-    try {
-        const response = await fetch('http://localhost:3001/api/lock/list', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ accessToken: token, clientId: clientId })
-        });
-        const data = await response.json();
-
-        if (data.list && data.list.length > 0) {
-            noDevicesText.style.display = 'none';
-            deviceTable.style.display = 'table';
-            deviceListBody.innerHTML = ''; 
-
-            data.list.forEach(lock => {
-                const row = `
-                    <tr>
-                        <td>${lock.lockAlias || 'Unnamed'}</td>
-                        <td>${lock.lockId}</td>
-                        <td>${lock.electricQuantity}%</td>
-                        <td><button class="select-btn" data-id="${lock.lockId}">Select</button></td>
-                    </tr>`;
-                deviceListBody.insertAdjacentHTML('beforeend', row);
-            });
-        }
-    } catch (err) {
-        alert("Error fetching device list.");
-    }
-});
-
-function showDashboard() {
-    loginScreen.style.display = 'none';
-    dashboard.style.display = 'block';
-    displayClientId.innerText = sessionStorage.getItem('tt_cid');
 }
 
-document.getElementById('btn-logout').onclick = () => {
-    sessionStorage.clear();
-    location.reload();
-};
+async function handleFetchLocks() {
+    const token = session.getToken();
+    const clientId = session.getClientId();
+    ui.buttons.fetchLocks.innerText = "Carregando...";
+
+    try {
+        const data = await apiClient.fetchLocks(clientId, token);
+        const hasLocks = renderDeviceTable(data.list, ui.table.bodyId);
+
+        if (hasLocks) {
+            ui.table.emptyText.style.display = 'none';
+            ui.table.container.style.display = 'table';
+        } else {
+            ui.table.emptyText.innerText = "Nenhuma fechadura vinculada a esta conta.";
+            ui.table.emptyText.style.display = 'block';
+        }
+    } catch (err) {
+        alert("Erro ao buscar a lista de fechaduras.");
+    } finally {
+        ui.buttons.fetchLocks.innerText = "Fetch Device List";
+    }
+}
+
+// Inicia a aplicação
+init();
