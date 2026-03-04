@@ -59,14 +59,14 @@ function showDashboard(isApiConnected = false) {
 
     if (isApiConnected) {
         ui.texts.displayClientId.innerText = session.getClientId();
-        ui.texts.connectionStatus.innerText = "● System Active";
+        ui.texts.connectionStatus.innerText = "● Sistema Ativo";
         ui.texts.connectionStatus.style.color = "#4CAF50";
         ui.buttons.fetchLocks.disabled = false;
         
         if (ui.cards.config) ui.cards.config.style.display = 'none';
     } else {
-        ui.texts.displayClientId.innerText = "Pending Configuration";
-        ui.texts.connectionStatus.innerText = "● Waiting for API Auth";
+        ui.texts.displayClientId.innerText = "Configuração pendente";
+        ui.texts.connectionStatus.innerText = "● Aguardando autentificação da API";
         ui.texts.connectionStatus.style.color = "#FFC107";
         ui.buttons.fetchLocks.disabled = true;
     }
@@ -91,12 +91,12 @@ function handleEnterApp() {
     const rawPassword = ui.inputs.password.value;
 
     if (!username || !rawPassword) {
-        alert("Please enter your TTLock username and password.");
+        alert("Por favor, insira as credenciais da sua conta Pado Digital Locking.");
         return;
     }
 
     tempCredentials.username = username;
-    tempCredentials.password = md5(rawPassword); 
+    tempCredentials.password = md5(rawPassword);
 
     showDashboard(false);
 }
@@ -106,16 +106,16 @@ async function handleAuthenticateAPI() {
     const clientSecret = ui.inputs.clientSecret.value;
 
     if (!clientId || !clientSecret) {
-        alert("Please provide the Client ID and Client Secret.");
+        alert("Insira suas credenciais da plataforma do desenvolvedor TTlock (Client ID e Client Secret).");
         return;
     }
 
     if (!tempCredentials.username || !tempCredentials.password) {
-        alert("Session expired. Please log out and authenticate again.");
+        alert("Sessão expirada. Por favor faça logout e login novamente.");
         return;
     }
 
-    ui.buttons.authenticate.innerText = "Connecting...";
+    ui.buttons.authenticate.innerText = "Conectando...";
 
     const credentials = {
         clientId,
@@ -130,15 +130,15 @@ async function handleAuthenticateAPI() {
         if (data.access_token) {
             session.save(data.access_token, credentials.clientId);
             showDashboard(true);
-            alert("API Authenticated Successfully!");
+            alert("Autentificação bem sucedida!");
         } else {
-            alert("Login failed: " + (data.description || "Check your credentials."));
+            alert("Falha no login: " + (data.description || "Cheque suas credenciais."));
         }
     } catch (err) {
-        alert("Connection error. Is the proxy server running?");
+        alert("Falha de conexão. Verifique se o servidor está rodando.");
         console.error(err);
     } finally {
-        ui.buttons.authenticate.innerText = "Connect API";
+        ui.buttons.authenticate.innerText = "Conectar API";
     }
 }
 
@@ -151,7 +151,7 @@ function handleLogout() {
 async function handleFetchLocks() {
     const token = session.getToken();
     const clientId = session.getClientId();
-    ui.buttons.fetchLocks.innerText = "Loading...";
+    ui.buttons.fetchLocks.innerText = "Carregando...";
 
     try {
         const data = await apiClient.fetchLocks(clientId, token);
@@ -161,15 +161,15 @@ async function handleFetchLocks() {
             ui.table.emptyText.style.display = 'none';
             ui.table.container.style.display = 'table';
         } else {
-            ui.table.emptyText.innerText = "No locks bound to this account.";
+            ui.table.emptyText.innerText = "Não há fechaduras vinculadas a esta conta.";
             ui.table.emptyText.style.display = 'block';
             ui.table.container.style.display = 'none';
         }
     } catch (err) {
-        alert("Error fetching device list.");
+        alert("Falha ao tentar encontrar dispositivos.");
         console.error(err);
     } finally {
-        ui.buttons.fetchLocks.innerText = "Fetch Device List";
+        ui.buttons.fetchLocks.innerText = "Encontrar Dispositivos";
     }
 }
 
@@ -192,29 +192,29 @@ function handleLockSelection(event) {
 
 async function handleRemoteUnlock() {
     if (!selectedLockId) {
-        alert("Please select a lock first.");
+        alert("Por favor, selecione uma fechadura primeiro.");
         return;
     }
 
     const token = session.getToken();
     const clientId = session.getClientId();
     
-    ui.buttons.remoteUnlock.innerText = "Unlocking...";
+    ui.buttons.remoteUnlock.innerText = "Desbloqueando...";
     ui.buttons.remoteUnlock.disabled = true;
 
     try {
         const data = await apiClient.remoteUnlock(clientId, token, selectedLockId);
         
         if (data.errcode === 0) {
-            alert("Success! Lock opened.");
+            alert("Sucesso! Fechadura desbloqueada.");
         } else {
-            alert(`Failed to unlock: ${data.errmsg || data.description || 'Unknown error'}`);
+            alert(`Falha no desbloqueio: ${data.errmsg || data.description || 'Erro desconhecido'}`);
         }
     } catch (err) {
-        alert("Error communicating with the proxy server.");
+        alert("Erro ao se comunicar com o servidor.");
         console.error(err);
     } finally {
-        ui.buttons.remoteUnlock.innerText = "Remote Unlock";
+        ui.buttons.remoteUnlock.innerText = "Abertura Remota";
         ui.buttons.remoteUnlock.disabled = false;
     }
 }
