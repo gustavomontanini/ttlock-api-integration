@@ -39,5 +39,67 @@ export const ttlockService = {
         
         const response = await axios.post(`${BASE_URL}/v3/lock/unlock`, params.toString());
         return response.data;
+    },
+
+    // NEW METHODS
+
+    async getLockDetails(accessToken, lockId) {
+        const response = await axios.get(`${BASE_URL}/v3/lock/detail`, {
+            params: {
+                clientId: process.env.TTLOCK_CLIENT_ID,
+                accessToken: accessToken,
+                lockId: lockId,
+                date: Date.now()
+            }
+        });
+        return response.data;
+    },
+
+    async renameLock(accessToken, lockId, lockName) {
+        const params = new URLSearchParams({
+            clientId: process.env.TTLOCK_CLIENT_ID,
+            accessToken: accessToken,
+            lockId: lockId,
+            lockAlias: lockName,
+            date: Date.now()
+        });
+        const response = await axios.post(`${BASE_URL}/v3/lock/rename`, params.toString());
+        return response.data;
+    },
+
+    async changeSuperPasscode(accessToken, lockId, password) {
+        const params = new URLSearchParams({
+            clientId: process.env.TTLOCK_CLIENT_ID,
+            accessToken: accessToken,
+            lockId: lockId,
+            password: password,
+            date: Date.now()
+        });
+        const response = await axios.post(`${BASE_URL}/v3/lock/updateAdminKeyboardPwd`, params.toString());
+        return response.data;
+    },
+
+    async configPassageMode(accessToken, lockId, passageMode, isAllDay) {
+        const params = new URLSearchParams({
+            clientId: process.env.TTLOCK_CLIENT_ID,
+            accessToken: accessToken,
+            lockId: lockId,
+            passageMode: passageMode, // 1 for ON, 2 for OFF
+            isAllDay: isAllDay,
+            date: Date.now()
+        });
+        const response = await axios.post(`${BASE_URL}/v3/lock/passageMode/config`, params.toString());
+        return response.data;
+    },
+
+    async deleteLock(accessToken, lockId) {
+        const params = new URLSearchParams({
+            clientId: process.env.TTLOCK_CLIENT_ID,
+            accessToken: accessToken,
+            lockId: lockId,
+            date: Date.now()
+        });
+        const response = await axios.post(`${BASE_URL}/v3/lock/delete`, params.toString());
+        return response.data;
     }
 };
