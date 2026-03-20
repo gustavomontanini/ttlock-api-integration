@@ -1,4 +1,4 @@
-import { apiClient } from '../api/apiClient.js';
+import { authApi } from '../api/authApi.js';
 import { session } from '../utils/session.js';
 import { appState } from '../state/appState.js';
 import { toast } from '../utils/toast.js';
@@ -23,7 +23,7 @@ export class ApiConnectionCard {
 
         this.btnAuthenticate.innerText = "Conectando...";
         try {
-            const data = await apiClient.login(appState.credentials);
+            const data = await authApi.login(appState.credentials);
 
             if (data.access_token) {
                 session.save(data.access_token);
