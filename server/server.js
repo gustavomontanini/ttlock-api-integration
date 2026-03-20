@@ -5,6 +5,8 @@ import cors from 'cors';
 // Import modular routes
 import authRoutes from './routes/auth.routes.js';
 import lockRoutes from './routes/lock.routes.js';
+import passcodeRoutes from './routes/passcode.routes.js';
+
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.use(express.json());
 // Register base routes
 app.use('/api/auth', authRoutes);
 app.use('/api/lock', lockRoutes);
+app.use('/api/passcode', passcodeRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
