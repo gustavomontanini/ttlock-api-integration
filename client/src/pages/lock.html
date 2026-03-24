@@ -23,14 +23,21 @@
 
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
+        <!-- Abertura Remota -->
         <div class="bg-card border border-border rounded-xl p-6 shadow-sm flex flex-col items-center justify-center gap-4 text-center">
             <h3 class="text-xl font-semibold">Abertura Remota</h3>
             <p class="text-muted-foreground text-sm mb-2">Destrancar instantaneamente via Gateway.</p>
             <button id="btn-remote-unlock" class="w-full bg-primary text-primary-foreground hover:bg-primary-hover px-4 py-3 rounded-xl font-bold transition-all shadow-md">
                 Destrancar Agora
             </button>
+
+            <button id="btn-go-passcode" class="w-full bg-secondary text-secondary-foreground hover:bg-accent px-4 py-3 rounded-xl font-bold transition-all border border-border flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><line x1="12" y1="16" x2="12" y2="16.01"/></svg>
+                Registrar Senha
+            </button>
         </div>
 
+        <!-- Configurações -->
         <div class="bg-card border border-border rounded-xl p-6 shadow-sm flex flex-col gap-4">
             <h3 class="text-xl font-semibold border-b border-border pb-2">Configurações</h3>
             
@@ -62,6 +69,7 @@
             </div>
         </div>
 
+        <!-- Zona de Perigo -->
         <div class="bg-card border border-red-900/30 rounded-xl p-6 shadow-sm flex flex-col items-center justify-center gap-4 text-center">
             <h3 class="text-xl font-semibold text-red-500">Zona de Perigo</h3>
             <p class="text-muted-foreground text-sm mb-2">Excluir esta fechadura apagará todos os dados, senhas e biometrias permanentemente.</p>

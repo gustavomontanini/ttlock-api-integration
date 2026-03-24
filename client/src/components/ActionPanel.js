@@ -12,6 +12,7 @@ export class ActionPanel {
         this.btnChangePasscode = document.getElementById('btn-change-passcode');
         this.btnConfigPassage = document.getElementById('btn-config-passage');
         this.btnDeleteLock = document.getElementById('btn-delete-lock');
+        this.btnGoPasscode = document.getElementById('btn-go-passcode'); // NEW
 
         // Inputs
         this.inputNewName = document.getElementById('input-new-name');
@@ -30,15 +31,29 @@ export class ActionPanel {
     bindEvents() {
         if (this.btnRemoteUnlock) this.btnRemoteUnlock.addEventListener('click', () => this.remoteUnlock());
         if (this.btnRefreshDetails) this.btnRefreshDetails.addEventListener('click', () => this.loadLockDetails());
-        
         if (this.btnRename) this.btnRename.addEventListener('click', () => this.renameLock());
         if (this.btnChangePasscode) this.btnChangePasscode.addEventListener('click', () => this.changeSuperPasscode());
         if (this.btnConfigPassage) this.btnConfigPassage.addEventListener('click', () => this.configPassageMode());
         if (this.btnDeleteLock) this.btnDeleteLock.addEventListener('click', () => this.deleteLock());
+
+        // Navigate to the passcode registration view
+        if (this.btnGoPasscode) {
+            this.btnGoPasscode.addEventListener('click', () => this.navigateToPasscode());
+        }
+    }
+
+    navigateToPasscode() {
+        const viewLock = document.getElementById('view-lock');
+        const viewPasscode = document.getElementById('view-passcode');
+        if (viewLock && viewPasscode) {
+            viewLock.classList.add('hidden');
+            viewPasscode.classList.remove('hidden');
+            // Dispatch a custom event so main.js can sync the passcode panel
+            document.dispatchEvent(new CustomEvent('navigate-passcode'));
+        }
     }
 
     // --- API Calls ---
-
 
     async loadLockDetails() {
         if (!appState.selectedLockId) return;
