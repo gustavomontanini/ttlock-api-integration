@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -22,60 +23,60 @@
 
 @layer base {
   :root {
-    --background: 330 25% 95%;                  
-    --foreground: 240 6% 10%;                 
-    --card: 330 15% 98%;                        
-    --card-foreground: 240 6% 10%;            
-    --border: 240 11% 89%;                    
-    --border-hover: 240 7% 79%;               
+    --background: 330 25% 95%;
+    --foreground: 240 6% 10%;
+    --card: 330 15% 98%;
+    --card-foreground: 240 6% 10%;
+    --border: 240 11% 89%;
+    --border-hover: 240 7% 79%;
     --input: 337.78 27.84% 80.98%;
 
-    --primary: 336 87% 48%;                   
-    --primary-hover: 336 90% 41%;             
-    --primary-foreground: 0 0% 100%;          
+    --primary: 336 87% 48%;
+    --primary-hover: 336 90% 41%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 340 100% 91%;                
-    --secondary-foreground: 336 100% 32%;     
+    --secondary: 340 100% 91%;
+    --secondary-foreground: 336 100% 32%;
 
-    --accent: 338.18 84.62% 94.9%;            
+    --accent: 338.18 84.62% 94.9%;
     --accent-foreground: 336.36 89.19% 7.25%;
 
-    --muted: 330 13% 99%;                     
-    --muted-foreground: 225 5% 46%;           
+    --muted: 330 13% 99%;
+    --muted-foreground: 225 5% 46%;
 
-    --inverted: 240 6% 7%;                    
-    --inverted-foreground: 240 6% 10%;        
+    --inverted: 240 6% 7%;
+    --inverted-foreground: 240 6% 10%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --destructive-light: 360 100% 80% / 0.20;
+    --destructive-light: 360 100% 80% / 0.2;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --background: 240 6% 7%;                
-      --foreground: 240 29% 94%;              
-      --card: 330 4% 11%;                     
-      --card-foreground: 240 29% 94%;         
-      --border: 240 5% 20%;                   
-      --border-hover: 240 5% 28%;             
+      --background: 240 6% 7%;
+      --foreground: 240 29% 94%;
+      --card: 330 4% 11%;
+      --card-foreground: 240 29% 94%;
+      --border: 240 5% 20%;
+      --border-hover: 240 5% 28%;
       --input: 337.78 27.84% 80.98%;
 
-      --primary: 336 200% 66%;                
-      --primary-hover: 336 100% 70%;          
-      --primary-foreground: 240 6% 7%;        
+      --primary: 336 200% 66%;
+      --primary-hover: 336 100% 70%;
+      --primary-foreground: 240 6% 7%;
 
-      --secondary: 340 68% 14%;               
-      --secondary-foreground: 336 100% 87%;   
+      --secondary: 340 68% 14%;
+      --secondary-foreground: 336 100% 87%;
 
-      --accent: 340 65% 25% / 0.25;                  
+      --accent: 340 65% 25% / 0.25;
       --accent-foreground: 240 29% 94%;
 
-      --muted: 330 2% 14%;                    
-      --muted-foreground: 330 0% 99%;         
+      --muted: 330 2% 14%;
+      --muted-foreground: 330 0% 99%;
 
-      --inverted: 0 0% 100%;                  
-      --inverted-foreground: 240 29% 94%;     
+      --inverted: 0 0% 100%;
+      --inverted-foreground: 240 29% 94%;
 
       --destructive: 0 84.2% 60.2%;
       --destructive-foreground: 210 40% 98%;
@@ -83,38 +84,52 @@
   }
 
   * {
+    font-family: "Inter", sans-serif;
+  }
+
+  * {
     border-color: hsl(var(--border));
   }
 
   /* Aurora Background (Login) */
-@keyframes blob {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
-}
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
 
-.animate-blob {
-  animation: blob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-}
+  .animate-blob {
+    animation: blob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
 
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
 
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
 
   input:-webkit-autofill,
-  input:-webkit-autofill:hover, 
-  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s !important;
     -webkit-text-fill-color: hsl(var(--foreground)) !important;

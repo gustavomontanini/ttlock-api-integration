@@ -112,6 +112,7 @@
     </div>
 
     <!-- Configurações -->
+
     <div
       class="bg-card border border-border rounded-xl p-6 shadow-sm flex flex-col gap-4"
     >
@@ -128,11 +129,11 @@
             type="text"
             id="input-new-name"
             placeholder="Novo nome"
-            class="flex-1 px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:border-primary text-sm"
+            class="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:border-primary text-sm"
           />
           <button
             id="btn-rename"
-            class="bg-secondary text-secondary-foreground px-3 py-2 rounded-lg font-semibold text-sm hover:bg-muted transition-colors"
+            class="shrink-0 bg-secondary text-secondary-foreground px-3 py-2 rounded-lg font-semibold text-sm hover:bg-muted transition-colors"
           >
             Salvar
           </button>
@@ -148,11 +149,11 @@
             type="password"
             id="input-super-passcode"
             placeholder="Nova senha (4-9 digitos)"
-            class="flex-1 px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:border-primary text-sm"
+            class="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:border-primary text-sm"
           />
           <button
             id="btn-change-passcode"
-            class="bg-secondary text-secondary-foreground px-3 py-2 rounded-lg font-semibold text-sm hover:bg-muted transition-colors"
+            class="shrink-0 bg-secondary text-secondary-foreground px-3 py-2 rounded-lg font-semibold text-sm hover:bg-muted transition-colors"
           >
             Salvar
           </button>
@@ -166,14 +167,14 @@
         <div class="flex gap-2">
           <select
             id="select-passage-mode"
-            class="flex-1 px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:border-primary text-sm"
+            class="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:border-primary text-sm"
           >
             <option value="0">Desativado (Tranca auto)</option>
             <option value="1">Ativado (Sempre aberta)</option>
           </select>
           <button
             id="btn-config-passage"
-            class="bg-secondary text-secondary-foreground px-3 py-2 rounded-lg font-semibold text-sm hover:bg-muted transition-colors"
+            class="shrink-0 bg-secondary text-secondary-foreground px-3 py-2 rounded-lg font-semibold text-sm hover:bg-muted transition-colors"
           >
             Aplicar
           </button>
