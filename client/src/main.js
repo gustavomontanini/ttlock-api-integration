@@ -4,9 +4,12 @@ import topbarHtml from "./pages/topbar.html?raw";
 import homeHtml from "./pages/home.html?raw";
 import lockHtml from "./pages/lock.html?raw";
 import passcodeHtml from "./pages/passcode.html?raw";
+import rfidHtml from "./pages/rfid.html?raw";
 import testsHtml from "./pages/tests.html?raw";
 import reportsHtml from "./pages/reports.html?raw";
+import lockSettingsHtml from "./pages/lockSettings.html?raw";
 
+// --- INJECT HTML ---
 document.getElementById("app").innerHTML = `
     ${loginHtml}
     <div id="dashboard" style="display: none;" class="flex flex-col min-h-screen relative">
@@ -16,8 +19,10 @@ document.getElementById("app").innerHTML = `
             ${homeHtml}
             ${lockHtml}
             ${passcodeHtml}
+            ${rfidHtml}
             ${testsHtml}
             ${reportsHtml}
+            ${lockSettingsHtml}
         </main>
     </div>
 `;
@@ -28,8 +33,10 @@ import { LoginScreen } from "./components/LoginScreen.js";
 import { DeviceTable } from "./components/DeviceTable.js";
 import { ActionPanel } from "./components/ActionPanel.js";
 import { PasscodePanel } from "./components/PasscodePanel.js";
+import { RfidPanel } from "./components/RfidPanel.js";
 import { TestsPanel } from "./components/TestsPanel.js";
 
+// --- DOM ELEMENTS ---
 const dashboardElement = document.getElementById("dashboard");
 const btnLogout = document.getElementById("btn-logout");
 const sidebar = document.getElementById("sidebar");
@@ -46,18 +53,29 @@ const btnSidebarReports = document.getElementById("btn-sidebar-reports");
 const viewHome = document.getElementById("view-home");
 const viewLock = document.getElementById("view-lock");
 const viewPasscode = document.getElementById("view-passcode");
+const viewRfid = document.getElementById("view-rfid");
 const viewTests = document.getElementById("view-tests");
 const viewReports = document.getElementById("view-reports");
+const viewLockSettings = document.getElementById("view-lock-settings");
 
-const btnBackHome = document.getElementById("btn-back-home");
-const btnBackLock = document.getElementById("btn-back-lock");
+// Navigation Buttons
 const btnTopbarHome = document.getElementById("btn-topbar-home");
+const btnBackHome = document.getElementById("btn-back-home");
+const btnBackLockFromPasscode = document.getElementById("btn-back-lock");
+const btnBackLockFromRfid = document.getElementById("btn-back-lock-rfid");
+const btnGoLockSettings = document.getElementById("btn-go-lock-settings");
+const btnBackLockFromSettings = document.getElementById(
+  "btn-back-lock-dashboard",
+);
+const btnGoRfid = document.getElementById("btn-go-rfid");
 
 let testsPanel;
 
 function init() {
+  // --- INSTANTIATE COMPONENTS ---
   let actionPanel;
   let passcodePanel;
+  let rfidPanel;
 
   try {
     actionPanel = new ActionPanel();
@@ -68,6 +86,11 @@ function init() {
     passcodePanel = new PasscodePanel();
   } catch (e) {
     console.error("PasscodePanel init error:", e);
+  }
+  try {
+    rfidPanel = new RfidPanel();
+  } catch (e) {
+    console.error("RfidPanel init error:", e);
   }
   try {
     testsPanel = new TestsPanel();
@@ -83,21 +106,16 @@ function init() {
     deviceTable.enable();
     showDashboard();
     deviceTable.fetchLocks();
-    navigateToHomeView(); // Ensure Home is highlighted on fresh login
+    navigateToHomeView();
   });
 
+  // --- GLOBAL EVENTS ---
   if (btnLogout) btnLogout.addEventListener("click", handleLogout);
   if (btnOpenSidebar) btnOpenSidebar.addEventListener("click", openSidebar);
   if (btnCloseSidebar) btnCloseSidebar.addEventListener("click", closeSidebar);
   if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
 
-  if (btnBackHome) {
-    btnBackHome.addEventListener("click", (e) => {
-      e.preventDefault();
-      navigateToHomeView();
-    });
-  }
-
+  // --- TOPBAR/GLOBAL ROUTING ---
   if (btnTopbarHome) {
     btnTopbarHome.addEventListener("click", (e) => {
       e.preventDefault();
@@ -105,10 +123,50 @@ function init() {
     });
   }
 
-  if (btnBackLock) {
-    btnBackLock.addEventListener("click", (e) => {
+  // --- HOME VIEW ROUTING ---
+  if (btnBackHome) {
+    btnBackHome.addEventListener("click", (e) => {
       e.preventDefault();
-      navigateToLockViewFromPasscode();
+      navigateToHomeView();
+    });
+  }
+
+  // --- LOCK VIEW ROUTING ---
+  if (btnGoLockSettings) {
+    btnGoLockSettings.addEventListener("click", (e) => {
+      e.preventDefault();
+      navigateToLockSettingsView();
+    });
+  }
+
+  if (btnGoRfid) {
+    btnGoRfid.addEventListener("click", (e) => {
+      e.preventDefault();
+      hideAllViews();
+      if (viewRfid) viewRfid.classList.remove("hidden");
+      if (rfidPanel) rfidPanel.syncLock();
+    });
+  }
+
+  // --- SUB-VIEW ROUTING (BACK BUTTONS) ---
+  if (btnBackLockFromPasscode) {
+    btnBackLockFromPasscode.addEventListener("click", (e) => {
+      e.preventDefault();
+      navigateToLockViewFromSubView();
+    });
+  }
+
+  if (btnBackLockFromRfid) {
+    btnBackLockFromRfid.addEventListener("click", (e) => {
+      e.preventDefault();
+      navigateToLockViewFromSubView();
+    });
+  }
+
+  if (btnBackLockFromSettings) {
+    btnBackLockFromSettings.addEventListener("click", (e) => {
+      e.preventDefault();
+      navigateToLockViewFromSubView();
     });
   }
 
@@ -125,14 +183,6 @@ function init() {
     });
   }
 
-  if (btnSidebarReports) {
-    btnSidebarReports.addEventListener("click", (e) => {
-      e.preventDefault();
-      closeSidebar();
-      navigateToReportsView();
-    });
-  }
-
   if (btnSidebarTests) {
     btnSidebarTests.addEventListener("click", (e) => {
       e.preventDefault();
@@ -141,12 +191,21 @@ function init() {
     });
   }
 
+  if (btnSidebarReports) {
+    btnSidebarReports.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeSidebar();
+      navigateToReportsView();
+    });
+  }
+
+  // --- INITIALIZATION CHECK ---
   if (session.isAuthenticated()) {
     loginScreen.hide();
     deviceTable.enable();
     showDashboard();
     deviceTable.fetchLocks();
-    navigateToHomeView(); // Ensure Home is highlighted on refresh
+    navigateToHomeView();
   } else {
     loginScreen.show();
   }
@@ -169,11 +228,27 @@ function updateSidebarActiveState(activeId) {
 // --- ROUTING FUNCTIONS ---
 
 function hideAllViews() {
-  if (viewHome) viewHome.classList.add("hidden");
-  if (viewLock) viewLock.classList.add("hidden");
-  if (viewPasscode) viewPasscode.classList.add("hidden");
-  if (viewTests) viewTests.classList.add("hidden");
-  if (viewReports) viewReports.classList.add("hidden");
+  const views = [
+    viewHome,
+    viewLock,
+    viewPasscode,
+    viewRfid,
+    viewTests,
+    viewReports,
+    viewLockSettings,
+  ];
+  views.forEach((view) => {
+    if (view) view.classList.add("hidden");
+  });
+}
+
+function navigateToHomeView() {
+  try {
+    appState.clearLock();
+  } catch (e) {}
+  hideAllViews();
+  if (viewHome) viewHome.classList.remove("hidden");
+  updateSidebarActiveState("btn-sidebar-home");
 }
 
 function navigateToLockView(lockId, lockName) {
@@ -183,31 +258,26 @@ function navigateToLockView(lockId, lockName) {
   hideAllViews();
   if (viewLock) viewLock.classList.remove("hidden");
 
-  updateSidebarActiveState("btn-sidebar-home"); // Lock view belongs to Home
+  updateSidebarActiveState("btn-sidebar-home");
 
   try {
     document.getElementById("btn-refresh-details").click();
   } catch (e) {}
 }
 
-function navigateToLockViewFromPasscode() {
+function navigateToLockViewFromSubView() {
   hideAllViews();
   if (viewLock) viewLock.classList.remove("hidden");
   updateSidebarActiveState("btn-sidebar-home");
 }
 
-function navigateToHomeView() {
-  try {
-    if (typeof appState.clearLock === "function") {
-      appState.clearLock();
-    } else {
-      appState.setLock(null, null);
-    }
-  } catch (e) {}
-
+function navigateToLockSettingsView() {
+  const nameEl = document.getElementById("lock-settings-name");
+  if (nameEl && appState.selectedLockName) {
+    nameEl.innerText = appState.selectedLockName;
+  }
   hideAllViews();
-  if (viewHome) viewHome.classList.remove("hidden");
-
+  if (viewLockSettings) viewLockSettings.classList.remove("hidden");
   updateSidebarActiveState("btn-sidebar-home");
 }
 
@@ -217,7 +287,6 @@ function navigateToTestsView() {
   }
   hideAllViews();
   if (viewTests) viewTests.classList.remove("hidden");
-
   updateSidebarActiveState("btn-sidebar-tests");
 }
 

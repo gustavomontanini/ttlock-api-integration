@@ -1,0 +1,162 @@
+<div
+  id="view-lock-settings"
+  class="mx-auto hidden w-full max-w-5xl transition-opacity duration-300"
+>
+  <button
+    id="btn-back-lock-dashboard"
+    class="text-muted-foreground hover:text-foreground mb-6 flex items-center gap-2 font-medium transition-colors"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+    Voltar para o painel
+  </button>
+
+  <header class="mb-8">
+    <div class="mb-1 flex items-center gap-3">
+      <div class="bg-primary/10 text-primary rounded-lg p-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+          />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight">Configurações Avançadas</h2>
+    </div>
+    <p class="text-muted-foreground mt-1 ml-1">
+      Fechadura:
+      <span id="lock-settings-name" class="text-foreground font-semibold"
+        >---</span
+      >
+    </p>
+  </header>
+
+  <section class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <div
+      class="bg-card border-border flex flex-col gap-4 rounded-xl border p-6 shadow-sm"
+    >
+      <h3 class="border-border border-b pb-2 text-xl font-semibold">
+        Dispositivo e Acesso
+      </h3>
+
+      <div class="flex flex-col gap-2">
+        <label class="text-muted-foreground text-xs font-semibold uppercase"
+          >Renomear Fechadura</label
+        >
+        <div class="flex gap-2">
+          <input
+            type="text"
+            id="input-new-name"
+            placeholder="Novo nome"
+            class="border-border bg-background focus:border-primary min-w-0 flex-1 rounded-lg border px-3 py-2 text-sm focus:outline-none"
+          />
+          <button
+            id="btn-rename"
+            class="bg-secondary text-secondary-foreground hover:bg-muted shrink-0 rounded-lg px-3 py-2 text-sm font-semibold transition-colors"
+          >
+            Salvar
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label class="text-muted-foreground text-xs font-semibold uppercase"
+          >Alterar Senha de Admin (Super Senha)</label
+        >
+        <div class="flex gap-2">
+          <input
+            type="password"
+            id="input-super-passcode"
+            placeholder="Nova senha (4-9 digitos)"
+            class="border-border bg-background focus:border-primary min-w-0 flex-1 rounded-lg border px-3 py-2 text-sm focus:outline-none"
+          />
+          <button
+            id="btn-change-passcode"
+            class="bg-secondary text-secondary-foreground hover:bg-muted shrink-0 rounded-lg px-3 py-2 text-sm font-semibold transition-colors"
+          >
+            Salvar
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label class="text-muted-foreground text-xs font-semibold uppercase"
+          >Modo Passagem</label
+        >
+        <div class="flex gap-2">
+          <select
+            id="select-passage-mode"
+            class="border-border bg-background focus:border-primary min-w-0 flex-1 rounded-lg border px-3 py-2 text-sm focus:outline-none"
+          >
+            <option value="0">Desativado (Tranca auto)</option>
+            <option value="1">Ativado (Sempre aberta)</option>
+          </select>
+          <button
+            id="btn-config-passage"
+            class="bg-secondary text-secondary-foreground hover:bg-muted shrink-0 rounded-lg px-3 py-2 text-sm font-semibold transition-colors"
+          >
+            Aplicar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-card flex flex-col items-center justify-center gap-4 rounded-xl border border-red-900/30 p-6 text-center shadow-sm"
+    >
+      <div class="bg-destructive/10 text-destructive rounded-full p-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 6h18" />
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+          <line x1="10" y1="11" x2="10" y2="17" />
+          <line x1="14" y1="11" x2="14" y2="17" />
+        </svg>
+      </div>
+      <h3 class="Zone Perigosa text-xl font-semibold text-red-500">
+        Zona de Perigo
+      </h3>
+      <p class="text-muted-foreground mb-2 max-w-sm text-sm">
+        Excluir esta fechadura apagará todos os dados, senhas, cartões e
+        biometrias permanentemente. A ação é irreversível.
+      </p>
+      <button
+        id="btn-delete-lock"
+        class="bg-destructive text-destructive-foreground w-full rounded-xl px-4 py-3.5 font-bold shadow-md transition-all hover:bg-red-600"
+      >
+        Sim, Excluir Fechadura Permanente
+      </button>
+    </div>
+  </section>
+</div>

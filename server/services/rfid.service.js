@@ -5,17 +5,18 @@ const BASE_URL = "https://api.sciener.com";
 
 export const rfidService = {
   async addCard(accessToken, lockId, cardNumber, name, startDate, endDate) {
-    const params = new URLSearchParams({
-      clientId: process.env.TTLOCK_CLIENT_ID,
-      accessToken: accessToken,
-      lockId: lockId,
-      cardNumber: cardNumber,
-      cardName: name || "Cartão RFID",
-      startDate: startDate || 0, // 0 = Permanent
-      endDate: endDate || 0,
-      addType: 2, // 2 = Add remotely via Wi-Fi Gateway
-      date: Date.now(),
-    });
+    const params = new URLSearchParams();
+
+    params.append("clientId", process.env.TTLOCK_CLIENT_ID);
+    params.append("accessToken", accessToken);
+    params.append("lockId", lockId);
+    params.append("cardNumber", cardNumber); // REQUIRED BY TTLOCK
+    params.append("cardName", name || "Cartão RFID");
+    params.append("startDate", startDate || 0);
+    params.append("endDate", endDate || 0);
+    params.append("addType", 2); // 2 = Push known card via Gateway
+    params.append("date", Date.now());
+
     const response = await axios.post(
       `${BASE_URL}/v3/identityCard/add`,
       params.toString(),
@@ -43,7 +44,7 @@ export const rfidService = {
       accessToken: accessToken,
       lockId: lockId,
       cardId: cardId,
-      deleteType: 2, // 2 = Delete via Wi-Fi Gateway
+      deleteType: 2,
       date: Date.now(),
     });
     const response = await axios.post(
@@ -75,7 +76,7 @@ export const rfidService = {
       cardId: cardId,
       startDate: startDate || 0,
       endDate: endDate || 0,
-      changeType: 2, // 2 = Change validity via Wi-Fi Gateway
+      changeType: 2,
       date: Date.now(),
     });
     const response = await axios.post(
