@@ -4,7 +4,7 @@
 >
   <button
     id="btn-back-lock-rfid"
-    class="text-muted-foreground hover:text-primary cursor-pointer mb-6 flex items-center gap-2 font-medium transition-colors"
+    class="text-muted-foreground hover:text-primary mb-6 flex cursor-pointer items-center gap-2 font-medium transition-colors"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +40,9 @@
           <line x1="2" y1="10" x2="22" y2="10" />
         </svg>
       </div>
-      <h2 class="text-3xl font-bold tracking-tight">Registrar Cartão RFID</h2>
+      <h2 class="text-primary text-3xl font-bold tracking-tight">
+        Registrar Cartão RFID
+      </h2>
     </div>
     <p class="text-muted-foreground mt-1 ml-1">
       Fechadura:
@@ -59,7 +61,7 @@
       </p>
       <div class="flex flex-wrap gap-2" id="rfid-type-tabs">
         <button
-          class="rfid-tab active-tab bg-primary text-primary-foreground border-primary rounded-lg border px-4 py-2 text-sm font-semibold shadow-sm transition-all"
+          class="rfid-tab active-tab bg-secondary text-secondary-foreground border-secondary rounded-lg border px-4 py-2 text-sm font-semibold shadow-sm transition-all"
           data-type="1"
         >
           Permanente
@@ -84,7 +86,7 @@
             type="text"
             id="input-rfid-name"
             placeholder="Ex: Cartão da Limpeza"
-            class="border-border bg-background focus:ring-primary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
+            class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
           />
         </div>
         <div class="flex flex-col gap-1.5">
@@ -96,7 +98,7 @@
             type="text"
             id="input-rfid-number"
             placeholder="Ex: 1234567890"
-            class="border-border bg-background focus:ring-primary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
+            class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
           />
         </div>
       </div>
@@ -114,7 +116,7 @@
             <input
               type="datetime-local"
               id="rfid-start-date"
-              class="border-border bg-background rounded-lg border px-3 py-2.5 text-sm transition-all"
+              class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
             />
           </div>
           <div class="flex flex-col gap-1.5">
@@ -125,7 +127,7 @@
             <input
               type="datetime-local"
               id="rfid-end-date"
-              class="border-border bg-background rounded-lg border px-3 py-2.5 text-sm transition-all"
+              class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
             />
           </div>
         </div>
@@ -133,17 +135,17 @@
 
       <button
         id="btn-add-rfid"
-        class="bg-primary text-primary-foreground hover:bg-primary-hover mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-4 text-base font-bold shadow-md transition-all"
+        class="bg-secondary text-secondary-foreground hover:bg-secondary-hover mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-4 text-base font-bold shadow-md transition-all"
       >
         <span id="btn-add-rfid-text">Adicionar Cartão via Gateway</span>
       </button>
 
       <div id="rfid-result" class="mt-4 hidden">
         <div
-          class="border-primary/30 bg-primary/5 flex flex-col items-center gap-3 rounded-xl border-2 p-6 text-center"
+          class="border-secondary/30 bg-secondary/5 flex flex-col items-center gap-3 rounded-xl border-2 p-6 text-center"
         >
           <svg
-            class="text-primary"
+            class="text-secondary"
             xmlns="http://www.w3.org/2000/svg"
             width="32"
             height="32"

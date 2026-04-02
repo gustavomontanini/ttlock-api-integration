@@ -1,10 +1,10 @@
 <div
   id="view-passcode"
-  class="hidden transition-opacity duration-300 w-full max-w-5xl mx-auto"
+  class="mx-auto hidden w-full max-w-5xl transition-opacity duration-300"
 >
   <button
     id="btn-back-lock"
-    class="mb-6 flex items-center gap-2 text-muted-foreground hover:text-primary cursor-pointer font-medium transition-colors"
+    class="text-muted-foreground hover:text-primary mb-6 flex cursor-pointer items-center gap-2 font-medium transition-colors"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,8 +23,8 @@
   </button>
 
   <header class="mb-8">
-    <div class="flex items-center gap-3 mb-1">
-      <div class="p-2 rounded-lg bg-primary/10 text-primary">
+    <div class="mb-1 flex items-center gap-3">
+      <div class="bg-primary/10 text-primary rounded-lg p-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="22"
@@ -41,52 +41,54 @@
           <line x1="12" y1="16" x2="12" y2="16.01" />
         </svg>
       </div>
-      <h2 class="text-3xl font-bold tracking-tight">Registrar Senha</h2>
+      <h2 class="text-primary text-3xl font-bold tracking-tight">
+        Registrar Senha
+      </h2>
     </div>
     <p class="text-muted-foreground mt-1 ml-1">
       Fechadura:
-      <span id="passcode-lock-name" class="font-semibold text-foreground"
+      <span id="passcode-lock-name" class="text-foreground font-semibold"
         >---</span
       >
     </p>
   </header>
 
   <div
-    class="bg-card border border-border rounded-2xl shadow-sm overflow-hidden w-full"
+    class="bg-card border-border w-full overflow-hidden rounded-2xl border shadow-sm"
   >
-    <div class="border-b border-border bg-muted/30 p-4">
+    <div class="border-border bg-muted/30 border-b p-4">
       <p
-        class="text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-3"
+        class="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase"
       >
         Tipo de Senha
       </p>
       <div class="flex flex-wrap gap-2" id="passcode-type-tabs">
         <button
-          class="passcode-tab active-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border"
+          class="passcode-tab active-tab bg-secondary text-secondary-foreground border-secondary rounded-lg border px-4 py-2 text-sm font-semibold shadow-sm transition-all"
           data-type="2"
         >
           Permanente
         </button>
         <button
-          class="passcode-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border border-transparent"
+          class="passcode-tab text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg border border-transparent px-4 py-2 text-sm font-semibold transition-all"
           data-type="3"
         >
           Temporária
         </button>
         <button
-          class="passcode-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border border-transparent"
+          class="passcode-tab text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg border border-transparent px-4 py-2 text-sm font-semibold transition-all"
           data-type="1"
         >
           Uso Único
         </button>
         <button
-          class="passcode-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border border-transparent"
+          class="passcode-tab text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg border border-transparent px-4 py-2 text-sm font-semibold transition-all"
           data-type="4"
         >
           Apagar Senha
         </button>
         <button
-          class="passcode-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border border-transparent"
+          class="passcode-tab text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg border border-transparent px-4 py-2 text-sm font-semibold transition-all"
           data-type="6"
         >
           Cíclica
@@ -94,13 +96,13 @@
       </div>
     </div>
 
-    <div class="p-6 sm:p-8 flex flex-col gap-6">
+    <div class="flex flex-col gap-6 p-6 sm:p-8">
       <div
         id="passcode-type-description"
-        class="flex items-start gap-3 p-4 rounded-lg bg-primary/5 border border-primary/20"
+        class="bg-secondary/5 border-secondary/20 flex items-start gap-3 rounded-lg border p-4"
       >
         <svg
-          class="mt-0.5 shrink-0 text-primary"
+          class="text-secondary mt-0.5 shrink-0"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -117,45 +119,45 @@
         </svg>
         <p
           id="passcode-type-desc-text"
-          class="text-sm text-muted-foreground leading-relaxed"
+          class="text-muted-foreground text-sm leading-relaxed"
         ></p>
       </div>
 
       <div id="passcode-custom-input-group" class="hidden flex-col gap-1.5">
         <label
-          class="text-xs text-muted-foreground font-semibold uppercase tracking-wide"
+          class="text-muted-foreground text-xs font-semibold tracking-wide uppercase"
           >Senha Desejada (4 a 9 dígitos)</label
         >
         <input
           type="text"
           id="input-custom-passcode"
           placeholder="Ex: 123456"
-          class="px-3 py-2.5 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm transition-all"
+          class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
         />
       </div>
 
       <div id="passcode-date-fields" class="hidden flex-col gap-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div class="flex flex-col gap-1.5">
             <label
-              class="text-xs text-muted-foreground font-semibold uppercase tracking-wide"
+              class="text-muted-foreground text-xs font-semibold tracking-wide uppercase"
               >Data de Início</label
             >
             <input
               type="datetime-local"
               id="passcode-start-date"
-              class="px-3 py-2.5 rounded-lg border border-border bg-background text-sm transition-all"
+              class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
             />
           </div>
           <div class="flex flex-col gap-1.5">
             <label
-              class="text-xs text-muted-foreground font-semibold uppercase tracking-wide"
+              class="text-muted-foreground text-xs font-semibold tracking-wide uppercase"
               >Data de Término</label
             >
             <input
               type="datetime-local"
               id="passcode-end-date"
-              class="px-3 py-2.5 rounded-lg border border-border bg-background text-sm transition-all"
+              class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
             />
           </div>
         </div>
@@ -163,74 +165,74 @@
 
       <div
         id="passcode-cyclic-fields"
-        class="hidden flex-col gap-4 border-t border-border pt-6 mt-2"
+        class="border-border mt-2 hidden flex-col gap-4 border-t pt-6"
       >
         <div class="flex flex-col gap-2">
           <label
-            class="text-xs text-muted-foreground font-semibold uppercase tracking-wide"
+            class="text-muted-foreground text-xs font-semibold tracking-wide uppercase"
             >Dias da Semana</label
           >
           <div class="flex flex-wrap gap-2">
             <label
-              class="flex items-center gap-1.5 text-sm bg-muted/50 px-3 py-2 rounded border border-border cursor-pointer hover:bg-muted transition-colors"
+              class="bg-muted/50 border-border hover:bg-muted flex cursor-pointer items-center gap-1.5 rounded border px-3 py-2 text-sm transition-colors"
               ><input type="checkbox" value="1" class="day-checkbox" />
               Seg</label
             >
             <label
-              class="flex items-center gap-1.5 text-sm bg-muted/50 px-3 py-2 rounded border border-border cursor-pointer hover:bg-muted transition-colors"
+              class="bg-muted/50 border-border hover:bg-muted flex cursor-pointer items-center gap-1.5 rounded border px-3 py-2 text-sm transition-colors"
               ><input type="checkbox" value="2" class="day-checkbox" />
               Ter</label
             >
             <label
-              class="flex items-center gap-1.5 text-sm bg-muted/50 px-3 py-2 rounded border border-border cursor-pointer hover:bg-muted transition-colors"
+              class="bg-muted/50 border-border hover:bg-muted flex cursor-pointer items-center gap-1.5 rounded border px-3 py-2 text-sm transition-colors"
               ><input type="checkbox" value="3" class="day-checkbox" />
               Qua</label
             >
             <label
-              class="flex items-center gap-1.5 text-sm bg-muted/50 px-3 py-2 rounded border border-border cursor-pointer hover:bg-muted transition-colors"
+              class="bg-muted/50 border-border hover:bg-muted flex cursor-pointer items-center gap-1.5 rounded border px-3 py-2 text-sm transition-colors"
               ><input type="checkbox" value="4" class="day-checkbox" />
               Qui</label
             >
             <label
-              class="flex items-center gap-1.5 text-sm bg-muted/50 px-3 py-2 rounded border border-border cursor-pointer hover:bg-muted transition-colors"
+              class="bg-muted/50 border-border hover:bg-muted flex cursor-pointer items-center gap-1.5 rounded border px-3 py-2 text-sm transition-colors"
               ><input type="checkbox" value="5" class="day-checkbox" />
               Sex</label
             >
             <label
-              class="flex items-center gap-1.5 text-sm bg-muted/50 px-3 py-2 rounded border border-border cursor-pointer hover:bg-muted transition-colors"
+              class="bg-muted/50 border-border hover:bg-muted flex cursor-pointer items-center gap-1.5 rounded border px-3 py-2 text-sm transition-colors"
               ><input type="checkbox" value="6" class="day-checkbox" />
               Sáb</label
             >
             <label
-              class="flex items-center gap-1.5 text-sm bg-muted/50 px-3 py-2 rounded border border-border cursor-pointer hover:bg-muted transition-colors"
+              class="bg-muted/50 border-border hover:bg-muted flex cursor-pointer items-center gap-1.5 rounded border px-3 py-2 text-sm transition-colors"
               ><input type="checkbox" value="7" class="day-checkbox" />
               Dom</label
             >
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-2">
+        <div class="mt-2 grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div class="flex flex-col gap-1.5">
             <label
-              class="text-xs text-muted-foreground font-semibold uppercase tracking-wide"
+              class="text-muted-foreground text-xs font-semibold tracking-wide uppercase"
               >Hora de Início</label
             >
             <input
               type="time"
               id="passcode-start-time"
               value="09:00"
-              class="px-3 py-2.5 rounded-lg border border-border bg-background text-sm transition-all"
+              class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
             />
           </div>
           <div class="flex flex-col gap-1.5">
             <label
-              class="text-xs text-muted-foreground font-semibold uppercase tracking-wide"
+              class="text-muted-foreground text-xs font-semibold tracking-wide uppercase"
               >Hora de Término</label
             >
             <input
               type="time"
               id="passcode-end-time"
               value="17:00"
-              class="px-3 py-2.5 rounded-lg border border-border bg-background text-sm transition-all"
+              class="border-border bg-background focus:ring-secondary rounded-lg border px-3 py-2.5 text-sm transition-all focus:ring-2 focus:outline-none"
             />
           </div>
         </div>
@@ -238,35 +240,35 @@
 
       <button
         id="btn-generate-passcode"
-        class="w-full bg-primary text-primary-foreground hover:bg-primary-hover px-4 py-4 mt-4 rounded-xl font-bold text-base transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+        class="bg-secondary text-secondary-foreground hover:bg-secondary-hover mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-4 text-base font-bold shadow-md transition-all disabled:cursor-not-allowed disabled:opacity-60"
       >
         <span id="btn-generate-text">Gerar Senha</span>
       </button>
 
-      <div id="passcode-result" class="hidden mt-4">
+      <div id="passcode-result" class="mt-4 hidden">
         <div
-          class="flex flex-col items-center gap-3 p-6 rounded-xl border-2 border-primary/30 bg-primary/5 text-center"
+          class="border-secondary/30 bg-secondary/5 flex flex-col items-center gap-3 rounded-xl border-2 p-6 text-center"
         >
-          <p class="text-sm text-muted-foreground font-medium">
+          <p class="text-muted-foreground text-sm font-medium">
             Senha registrada com sucesso
           </p>
           <div class="flex items-center gap-3">
             <span
               id="passcode-result-value"
-              class="text-5xl font-black tracking-[0.25em] text-primary font-mono"
+              class="text-secondary font-mono text-5xl font-black tracking-[0.25em]"
               >------</span
             >
           </div>
           <p
             id="passcode-result-validity"
-            class="text-sm text-muted-foreground mt-2"
+            class="text-muted-foreground mt-2 text-sm"
           ></p>
         </div>
       </div>
 
       <div
         id="passcode-error"
-        class="hidden p-4 mt-4 rounded-xl border border-red-300/40 bg-red-50/10 text-sm text-red-400"
+        class="mt-4 hidden rounded-xl border border-red-300/40 bg-red-50/10 p-4 text-sm text-red-400"
       >
         <span id="passcode-error-text">Falha ao gerar senha.</span>
       </div>

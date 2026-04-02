@@ -52,7 +52,7 @@ export class FingerprintPanel {
       const t = parseInt(tab.getAttribute("data-type"));
       if (t === type) {
         tab.className =
-          "fingerprint-tab active-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border bg-primary text-primary-foreground border-primary shadow-sm";
+          "fingerprint-tab active-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border bg-secondary text-secondary-foreground border-primary/20 shadow-sm";
       } else {
         tab.className =
           "fingerprint-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border border-transparent text-muted-foreground hover:text-foreground hover:bg-muted";

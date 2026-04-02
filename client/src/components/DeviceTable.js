@@ -13,7 +13,6 @@ export class DeviceTable {
     this.tabOnline = document.getElementById("tab-online");
     this.tabOffline = document.getElementById("tab-offline");
 
-    // Ensure the callback is stored!
     this.onLockSelected = onLockSelected;
 
     this.allLocks = [];
@@ -61,16 +60,18 @@ export class DeviceTable {
   switchTab(tabName) {
     this.currentTab = tabName;
 
+    // Modern Tab Classes
+    const activeClass =
+      "active-tab bg-background text-foreground shadow-sm px-5 py-1.5 rounded-md text-sm font-bold transition-all cursor-pointer";
+    const inactiveClass =
+      "text-muted-foreground hover:text-foreground px-5 py-1.5 rounded-md text-sm font-medium transition-all cursor-pointer";
+
     if (tabName === "online") {
-      this.tabOnline.className =
-        "px-4 py-1.5 rounded-md text-sm font-semibold bg-background shadow-sm text-foreground transition-all cursor-pointer";
-      this.tabOffline.className =
-        "px-4 py-1.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground transition-all cursor-pointer";
+      this.tabOnline.className = activeClass;
+      this.tabOffline.className = inactiveClass;
     } else {
-      this.tabOffline.className =
-        "px-4 py-1.5 rounded-md text-sm font-semibold bg-background shadow-sm text-foreground transition-all cursor-pointer";
-      this.tabOnline.className =
-        "px-4 py-1.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground transition-all cursor-pointer";
+      this.tabOffline.className = activeClass;
+      this.tabOnline.className = inactiveClass;
     }
 
     this.render();
@@ -107,18 +108,19 @@ export class DeviceTable {
       const tr = document.createElement("tr");
       const lockName = lock.lockAlias || "Sem Nome";
 
-      tr.className = "hover:bg-muted/50 transition-colors";
+      tr.className = "hover:bg-muted/30 transition-colors group";
       tr.innerHTML = `
-                <td class="px-6 py-4 whitespace-nowrap font-medium">${lockName}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-muted-foreground">${lock.lockId}</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">
+                <td class="px-6 py-4 text-center whitespace-nowrap font-medium group-hover:text-primary transition-colors">${lockName}</td>
+                <td class="px-6 py-4 text-center whitespace-nowrap text-muted-foreground">${lock.lockId}</td>
+                <td class="px-6 py-4 text-center whitespace-nowrap">
+                    <span class="px-2.5 py-1.5 rounded-full text-xs font-bold bg-green-500/10 text-green-500 border border-green-500/20">
                         ${lock.electricQuantity || 0}%
                     </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <button class="select-btn bg-inverted text-inverted-foreground hover:bg-primary/10 hover:text-primary px-4 py-1.5 rounded-md text-sm font-semibold transition-colors shadow-sm" data-id="${lock.lockId}" data-name="${lockName}">
+                <td class="px-6 py-4 whitespace-nowrap text-center">
+                    <button class="select-btn inline-flex items-center justify-center gap-2 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer" data-id="${lock.lockId}" data-name="${lockName}">
                         Selecionar
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                     </button>
                 </td>
             `;

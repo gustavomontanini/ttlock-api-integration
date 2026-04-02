@@ -95,7 +95,7 @@ export class PasscodePanel {
       const t = parseInt(tab.getAttribute("data-type"));
       if (t === type) {
         tab.className =
-          "passcode-tab active-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border bg-primary text-primary-foreground border-primary shadow-sm";
+          "passcode-tab active-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border bg-secondary text-secondary-foreground border-primary/20 shadow-sm";
       } else {
         tab.className =
           "passcode-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border border-transparent text-muted-foreground hover:text-foreground hover:bg-muted";

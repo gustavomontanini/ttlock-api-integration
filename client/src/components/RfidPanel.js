@@ -52,7 +52,7 @@ export class RfidPanel {
       const t = parseInt(tab.getAttribute("data-type"));
       if (t === type) {
         tab.className =
-          "rfid-tab active-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border bg-primary text-primary-foreground border-primary shadow-sm";
+          "rfid-tab active-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border bg-secondary text-secondary-foreground border-primary/20 shadow-sm";
       } else {
         tab.className =
           "rfid-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all border border-transparent text-muted-foreground hover:text-foreground hover:bg-muted";
