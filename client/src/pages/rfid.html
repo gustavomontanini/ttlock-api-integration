@@ -135,17 +135,17 @@
 
       <button
         id="btn-add-rfid"
-        class="bg-secondary text-secondary-foreground hover:bg-secondary-hover mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-4 text-base font-bold shadow-md transition-all"
+        class="bg-secondary text-secondary-foreground hover:bg-secondary-hover mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-4 text-base font-bold shadow-md transition-all disabled:cursor-not-allowed disabled:opacity-60"
       >
         <span id="btn-add-rfid-text">Adicionar Cartão via Gateway</span>
       </button>
 
       <div id="rfid-result" class="mt-4 hidden">
         <div
-          class="border-primary/30 bg-secondary/5 flex flex-col items-center gap-3 rounded-xl border-2 p-6 text-center"
+          class="border-secondary/30 bg-secondary/5 flex flex-col items-center gap-3 rounded-xl border-2 p-6 text-center"
         >
           <svg
-            class="text-primary"
+            class="text-secondary"
             xmlns="http://www.w3.org/2000/svg"
             width="32"
             height="32"
@@ -159,7 +159,7 @@
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
             <polyline points="22 4 12 14.01 9 11.01" />
           </svg>
-          <p class="text-muted-foreground text-sm font-medium">
+          <p class="text-foreground text-lg font-bold">
             Cartão registrado com sucesso!
           </p>
           <p class="text-muted-foreground mt-1 max-w-sm text-sm">
@@ -177,4 +177,45 @@
       </div>
     </div>
   </div>
+
+  <section
+    class="bg-card border-border mt-8 overflow-hidden rounded-xl border shadow-sm"
+  >
+    <div
+      class="border-border bg-muted/10 flex flex-col items-start justify-between gap-4 border-b p-4 sm:flex-row sm:items-center sm:p-6"
+    >
+      <h3 class="text-xl font-semibold">Cartões Registrados</h3>
+      <button
+        id="btn-refresh-rfids"
+        class="bg-muted/50 hover:bg-muted border-border text-muted-foreground hover:text-foreground cursor-pointer rounded-md border px-5 py-1.5 text-sm font-medium transition-all"
+      >
+        Atualizar Lista
+      </button>
+    </div>
+    <div class="overflow-x-auto">
+      <table
+        id="rfid-table"
+        class="w-full border-collapse text-left"
+        style="display: none"
+      >
+        <thead>
+          <tr
+            class="bg-muted/30 text-muted-foreground border-border border-b text-xs tracking-wider uppercase"
+          >
+            <th class="px-6 py-4 text-center font-semibold">Nome</th>
+            <th class="px-6 py-4 text-center font-semibold">
+              Número do Cartão
+            </th>
+            <th class="px-6 py-4 text-center font-semibold">Validade</th>
+            <th class="px-6 py-4 text-center font-semibold">Status</th>
+            <th class="px-6 py-4 text-center font-semibold">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="rfid-list-body" class="divide-border divide-y"></tbody>
+      </table>
+      <div id="no-rfids" class="text-muted-foreground p-10 text-center text-sm">
+        Nenhum cartão encontrado.
+      </div>
+    </div>
+  </section>
 </div>
