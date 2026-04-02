@@ -7,6 +7,7 @@ export const passcodeApi = {
     passcodeType,
     startDate,
     endDate,
+    name,
   ) {
     const response = await fetch(`${API_BASE_URL}/generate-random`, {
       method: "POST",
@@ -17,6 +18,7 @@ export const passcodeApi = {
         passcodeType,
         startDate,
         endDate,
+        name,
       }),
     });
     return response.json();

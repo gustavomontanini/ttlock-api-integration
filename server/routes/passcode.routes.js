@@ -4,7 +4,8 @@ import { passcodeService } from "../services/passcode.service.js";
 const router = Router();
 
 router.post("/generate-random", async (req, res) => {
-  const { accessToken, lockId, passcodeType, startDate, endDate } = req.body;
+  const { accessToken, lockId, passcodeType, startDate, endDate, name } =
+    req.body;
   try {
     const data = await passcodeService.getRandomPasscode(
       accessToken,
@@ -12,6 +13,7 @@ router.post("/generate-random", async (req, res) => {
       passcodeType,
       startDate,
       endDate,
+      name,
     );
     res.json(data);
   } catch (error) {

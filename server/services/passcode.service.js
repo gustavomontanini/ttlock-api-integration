@@ -10,6 +10,7 @@ export const passcodeService = {
     passcodeType,
     startDate,
     endDate,
+    name,
   ) {
     const params = new URLSearchParams();
     params.append("clientId", process.env.TTLOCK_CLIENT_ID);
@@ -17,6 +18,7 @@ export const passcodeService = {
     params.append("lockId", lockId);
     params.append("keyboardPwdType", passcodeType);
     params.append("date", Date.now());
+    params.append("keyboardPwdName", name || "Senha Aleatória");
 
     const safeStartDate = startDate || Date.now();
     const safeEndDate = endDate || 0;
@@ -72,7 +74,7 @@ export const passcodeService = {
   },
 
   async getPasscodeList(accessToken, lockId, pageNo = 1, pageSize = 50) {
-    const response = await axios.get(`${BASE_URL}/v3/keyboardPwd/list`, {
+    const response = await axios.get(`${BASE_URL}/v3/lock/listKeyboardPwd`, {
       params: {
         clientId: process.env.TTLOCK_CLIENT_ID,
         accessToken: accessToken,
